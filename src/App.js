@@ -12,16 +12,6 @@ function App() {
   const [id, setId] = useState(0);
   const [drop, setDrop] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("email");
-    console.log(token);
-    if (token) {
-      setIsLoggedIn(true);
-      const _user = users.filter((user) => user.email === token);
-      setAdmin(..._user);
-    }
-  }, []);
-
   const [users] = useState([
     {
       id: "a",
@@ -143,6 +133,17 @@ function App() {
       ],
     },
   ]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("email");
+    console.log(token);
+    const _user = users.filter((user) => user.email === token);
+    console.log(_user);
+    if (_user.length) {
+      setIsLoggedIn(true);
+      setAdmin(..._user);
+    }
+  }, [users, isLoggedIn]);
 
   return (
     <div onClick={() => drop && setDrop(false)}>
